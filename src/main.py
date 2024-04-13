@@ -46,6 +46,9 @@ def consult_strategy_gg(player, strategy, defense, action_last_took, been_attack
 
 def consult_strategy_bg(bad_guy, strategy, attack, last_move):
     #Will consult other file to determine action
+    #lowest hanging fruit always - picks lowest defense every time
+    #Using the function "mathmatically" the best option - payoff = ggbank *.2 * (1 + (defense - attack))
+    #Incognito attack - where bg attacks every 3 turn
     return 0
 
 #good guys take their action and update their stats
