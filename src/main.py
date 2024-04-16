@@ -6,6 +6,8 @@
 import pandas as pd
 import numpy as np
 
+import Strategy
+
 #Create a dataframe to track the game
 #Dataframe example:
 #   bank  defense  strategy  action_last_took  been_attacked   turn  
@@ -27,21 +29,21 @@ def create_game(num_players, num_rounds):
 
 #Create a dataframe for the bad guy
 #Dataframe example:
-#   bank  last_move  strategy
-#0     0          0         0
+#   bank  last_move  strategy   turn
+#0     0          0         0    0
 def create_bad_guy():
     #Create the columns for the dataframe
-    columns = ['bank', 'attack', 'strategy']
+    columns = ['bank', 'attack', 'strategy', 'turn']
     
     #Create the dataframe
-    bad_guys_df = pd.DataFrame(np.zeros((1, 3)), columns=columns)
+    bad_guys_df = pd.DataFrame(np.zeros((1, 4)), columns=columns)
     
     return bad_guys_df
 
 
 #good guys consult their strategy to determine their action
-def consult_strategy_gg(player, strategy, defense, action_last_took, been_attacked, turn):
-    #Will consult other file to determine action
+def consult_strategy_gg(good_guy_df):
+    find_next_move_gg(good_guy_df)
     return 0
 
 def consult_strategy_bg(bad_guy, strategy, attack, last_move):
