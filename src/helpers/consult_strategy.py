@@ -17,7 +17,7 @@ class ConsultStrategy:
         pos = random.randint(0, (len(strategies) - 1))
         new_strategy = strategies[pos]
         gg.update_strat(new_strategy)
-        print(gg.strat)
+        #print(gg.strat)
         return
 
     # choose defense or value
