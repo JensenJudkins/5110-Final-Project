@@ -2,6 +2,7 @@ class Bad_Guy:
     last_action = None
     strat = None
     num_moves = 0
+    num_steals = 0
 
     def __init__(self, bg_id, att_lvl=0, bank=0):
         self.bg_id = bg_id

@@ -85,6 +85,8 @@ def print_game_state(good_guys, bad_guys):
     print("Attack Level:" + str(bad_guys.att_lvl))
     print("Strategy:" + str(bad_guys.strat))
     print("Last Action:" + str(bad_guys.last_action))
+    print("Number of Moves:" + str(bad_guys.num_moves))
+    print("Number of Steals:" + str(bad_guys.num_steals))
     print("\n")
 
     return 0
