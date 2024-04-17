@@ -6,72 +6,55 @@
 import pandas as pd
 import numpy as np
 
-import Strategy
 
-#Create a dataframe to track the game
-#Dataframe example:
-#   bank  defense  strategy  action_last_took  been_attacked   turn  
-#0     0        0         0                 0              0      0            
-#1     0        0         0                 0              0      0            
-#2     0        0         0                 0              0      0            
-#3     0        0         0                 0              0      0            
-#4     0        0         0                 0              0      0           
+from helpers import consult_strategy
+from Good_Guy import Good_Guy
+from Bad_Guy import Bad_Guy
+      
 def create_game(num_players):
-    #Create the columns for the dataframe
-    columns = ['bank', 'defense', 'strategy', 'action_last_took', 'been_attacked', 'turn']
-    
-    
-    #Create the dataframe using the columns and each row is a player
-    good_guys_df = pd.DataFrame(np.zeros((num_players, 6)), columns=columns)
-    
-    #Change all columns to integers
-    good_guys_df = good_guys_df.astype(int)
-    
+    list_of_good_guys = []
 
-    #Change strategy column to a string
-    good_guys_df['strategy'] = good_guys_df['strategy'].astype(str)
+    #Create good guys
+    for i in range(num_players):
+        gg = Good_Guy(i, 0, 0)
+        list_of_good_guys.append(gg)
+        
 
-    #Assign '1-2-1' strategy
-    good_guys_df.loc[0, 'strategy'] = '1-2-1'
-    good_guys_df.loc[1, 'strategy'] = '1-2-1'
-    good_guys_df.loc[2, 'strategy'] = '1-2-1'
-    good_guys_df.loc[3, 'strategy'] = '1-2-1'
-    good_guys_df.loc[4, 'strategy'] = '1-2-1'
+    return list_of_good_guys
 
 
-    return good_guys_df
 
-
-#Create a dataframe for the bad guy
-#Dataframe example:
-#   bank  last_move  strategy   turn
-#0     0          0         0    0
 def create_bad_guy():
-    #Create the columns for the dataframe
-    columns = ['bank', 'attack', 'strategy', 'turn']
-    
-    #Create the dataframe
-    bad_guys_df = pd.DataFrame(np.zeros((1, 4)), columns=columns)
-    
-    #Change strategy column to a string
-    bad_guys_df['strategy'] = bad_guys_df['strategy'].astype(str)
-
-    #Assign '1-2-1' strategy
+    bg = Bad_Guy(0, 0, 0)
+    return bg
 
 
-    return bad_guys_df
 
-
-#good guys consult their strategy to determine their action
-def consult_strategy_gg(good_guy_df):
-    Strategy.find_next_move_gg(good_guy_df)
+def get_strategy_gg(good_guy):
+    #This will assign each good guy a strategy
+    consult_strategy.ConsultStrategy.consult_strategy(good_guy)
     return 0
 
-def consult_strategy_bg(bad_guy, strategy, attack, last_move):
+def use_strategy_gg(good_guy):
+    #This will use the strategy assigned to the good guy
+    consult_strategy.ConsultStrategy.use_strategy(good_guy)
+    return 0
+
+def consult_strategy_bg(bad_guy):
     #Will consult other file to determine action
     #lowest hanging fruit always - picks lowest defense every time
     #Using the function "mathmatically" the best option - payoff = ggbank *.2 * (1 + (defense - attack))
     #Incognito attack - where bg attacks every 3 turn
+    consult_strategy.ConsultStrategy.bad_guy_consult_strategy(bad_guy)
+    return 0
+
+def use_strategy_bg(bad_guy, good_guys):
+
+    #Find the good guy with the lowest defense
+    good_guy = min(good_guys, key=lambda x: x.def_lvl)
+    print("Good guy with lowest defense is " + str(good_guy.gg_id) + " on turn " + str(bad_guy.num_moves))
+    #Will consult other file to determine action
+    consult_strategy.ConsultStrategy.bad_guy_use_strategy(bad_guy, good_guy)
     return 0
 
 #good guys take their action and update their stats
@@ -85,21 +68,54 @@ def take_action_bg(bad_guy, action, turn):
     return 0
 
 #Prints the game state for tracking
-def print_game_state(good_guys_df, bad_guys_df):
-    print(good_guys_df)
-    print(bad_guys_df)
+def print_game_state(good_guys, bad_guys):
+    print("Good Guys")
+    for gg in good_guys:
+        print("Good guy ID:" + str(gg.gg_id))
+        print("Bank:" + str(gg.bank))
+        print("Defense Level:" + str(gg.def_lvl))
+        print("Strategy:" + str(gg.strat))
+        print("Last Action:" + str(gg.last_action))
+        print("Attack Count:" + str(gg.attack_count))
+        print("\n")
+
+    print("Bad Guy")
+    print("Bad guy ID:" + str(bad_guys.bg_id))
+    print("Bank:" + str(bad_guys.bank))
+    print("Attack Level:" + str(bad_guys.att_lvl))
+    print("Strategy:" + str(bad_guys.strat))
+    print("Last Action:" + str(bad_guys.last_action))
+    print("Number of Moves:" + str(bad_guys.num_moves))
+    print("Number of Steals:" + str(bad_guys.num_steals))
+    print("\n")
+
+    return 0
 
 
 
 #Main function to run the game
 def main():
-    good_guys_df = create_game(5)
+    good_guys = create_game(2)
+    bad_guys = create_bad_guy()
 
-    print(good_guys_df.head())
+    print("Start of game")
+    print_game_state(good_guys, bad_guys)
 
-    bad_guys_df = create_bad_guy()
+    turns = 10
+    for turn in range(turns):
+        for good_guy in good_guys:
+            get_strategy_gg(good_guy)
+        
+        for good_guy in good_guys:
+            use_strategy_gg(good_guy)
 
-    consult_strategy_gg(good_guys_df)
+        consult_strategy_bg(bad_guys)
+        use_strategy_bg(bad_guys, good_guys)
+        
+
+    print("End of game")
+    print_game_state(good_guys, bad_guys)
 
 main()
+
 

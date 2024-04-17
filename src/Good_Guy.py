@@ -2,6 +2,9 @@ class Good_Guy:
     last_action = None
     attack_count = 0
     strat = None
+    def_lvl = 0
+    num_moves = 0
+    #bank = 0
     
     def __init__(self, gg_id, def_lvl=0, bank=0):
         self.gg_id = gg_id

@@ -11,6 +11,7 @@ class Actions:
         gg.update_last_action("money")
 
     def bg_steal(bg, gg):
+        #print("Attempting to steal from good guy" + str(gg.gg_id))
         gg.bank -= 1
         gg.increase_attack_count()
         bg.bank += 1
