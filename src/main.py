@@ -52,7 +52,7 @@ def use_strategy_bg(bad_guy, good_guys):
 
     #Find the good guy with the lowest defense
     good_guy = min(good_guys, key=lambda x: x.def_lvl)
-
+    print("Good guy with lowest defense is " + str(good_guy.gg_id) + " on turn " + str(bad_guy.num_moves))
     #Will consult other file to determine action
     consult_strategy.ConsultStrategy.bad_guy_use_strategy(bad_guy, good_guy)
     return 0
