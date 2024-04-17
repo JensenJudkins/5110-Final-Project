@@ -6,7 +6,6 @@
 import pandas as pd
 import numpy as np
 
-import Strategy
 
 from helpers import consult_strategy
 from Good_Guy import Good_Guy
@@ -38,16 +37,15 @@ def create_bad_guy():
     return bg
 
 
-#good guys consult their strategy to determine their action
-def consult_strategy_gg(good_guy):
-    
-    #Will consult other file to determine action
+
+def get_strategy_gg(good_guy):
+    #This will assign each good guy a strategy
     consult_strategy.ConsultStrategy.consult_strategy(good_guy)
+    return 0
 
-    #Print the good guy and their strategy
-    # print(good_guy.gg_id)
-    # print(good_guy.strat)
-
+def use_strategy_gg(good_guy):
+    #This will use the strategy assigned to the good guy
+    consult_strategy.ConsultStrategy.use_strategy(good_guy)
     return 0
 
 def consult_strategy_bg(bad_guy, strategy, attack, last_move):
@@ -92,12 +90,24 @@ def print_game_state(good_guys, bad_guys):
 
 #Main function to run the game
 def main():
-    good_guys = create_game(5)
+    good_guys = create_game(2)
     bad_guys = create_bad_guy()
 
-    for good_guy in good_guys:
-        consult_strategy_gg(good_guy)
+    print("Start of game")
+    print_game_state(good_guys, bad_guys)
+
+    turns = 10
+    for turn in range(turns):
+        for good_guy in good_guys:
+            get_strategy_gg(good_guy)
+        
+        for good_guy in good_guys:
+            use_strategy_gg(good_guy)
+        
+
+    print("End of game")
     print_game_state(good_guys, bad_guys)
 
 main()
+
 
