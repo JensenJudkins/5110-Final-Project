@@ -40,11 +40,21 @@ def use_strategy_gg(good_guy):
     consult_strategy.ConsultStrategy.use_strategy(good_guy)
     return 0
 
-def consult_strategy_bg(bad_guy, strategy, attack, last_move):
+def consult_strategy_bg(bad_guy):
     #Will consult other file to determine action
     #lowest hanging fruit always - picks lowest defense every time
     #Using the function "mathmatically" the best option - payoff = ggbank *.2 * (1 + (defense - attack))
     #Incognito attack - where bg attacks every 3 turn
+    consult_strategy.ConsultStrategy.bad_guy_consult_strategy(bad_guy)
+    return 0
+
+def use_strategy_bg(bad_guy, good_guys):
+
+    #Find the good guy with the lowest defense
+    good_guy = min(good_guys, key=lambda x: x.def_lvl)
+
+    #Will consult other file to determine action
+    consult_strategy.ConsultStrategy.bad_guy_use_strategy(bad_guy, good_guy)
     return 0
 
 #good guys take their action and update their stats
@@ -73,6 +83,7 @@ def print_game_state(good_guys, bad_guys):
     print("Bad guy ID:" + str(bad_guys.bg_id))
     print("Bank:" + str(bad_guys.bank))
     print("Attack Level:" + str(bad_guys.att_lvl))
+    print("Strategy:" + str(bad_guys.strat))
     print("Last Action:" + str(bad_guys.last_action))
     print("\n")
 
@@ -95,6 +106,9 @@ def main():
         
         for good_guy in good_guys:
             use_strategy_gg(good_guy)
+
+        consult_strategy_bg(bad_guys)
+        use_strategy_bg(bad_guys, good_guys)
         
 
     print("End of game")

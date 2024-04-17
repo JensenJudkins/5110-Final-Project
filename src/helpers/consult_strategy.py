@@ -61,6 +61,38 @@ class ConsultStrategy:
     def not_weakest(self):
         pass
 
+
+    def bad_guy_consult_strategy(bg):
+        strategies = ["att-att-res", "one-one"]
+        # Randomly choose a new strategy
+        pos = random.randint(0, (len(strategies) - 1))
+        new_strategy = strategies[pos]
+        bg.update_strat(new_strategy)
+        #print(bg.strat)
+        return
+    
+    def bad_guy_use_strategy(bg, gg):
+        if bg.strat == "att-att-res":
+            ConsultStrategy.att_att_res(bg, gg)
+        else:
+            ConsultStrategy.one_one(bg, gg)
+        return
+    
+    def att_att_res(bg, gg):
+        if bg.num_moves % 3 == 0:
+            Actions.bg_research(bg)
+        else:
+            Actions.bg_steal(bg, gg)
+        return
+    
+    def one_one(bg, gg):
+        if bg.num_moves % 2 == 0:
+            Actions.bg_research(bg)
+        else:
+            Actions.bg_steal(bg, gg)
+        return
+    
+
 # class Actions:
 #     def gg_choose_defense(gg):
 #         gg.def_lvl += 1
