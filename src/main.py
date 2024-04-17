@@ -19,8 +19,7 @@ def create_game(num_players):
         gg = Good_Guy(i, 0, 0)
         gg.update_strat("1-2-1")
         gg.update_last_action("defense")
-        gg.increase_attack_count()
-        gg.increase_attack_count()
+        
 
         #Print the good guy
         #print(gg.gg_id)
