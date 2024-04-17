@@ -81,8 +81,11 @@ class ConsultStrategy:
     def att_att_res(bg, gg):
         if bg.num_moves % 3 == 0:
             Actions.bg_research(bg)
+            bg.num_moves += 1
+            #print("research")
         else:
             Actions.bg_steal(bg, gg)
+            #print("steal")
         return
     
     def one_one(bg, gg):
