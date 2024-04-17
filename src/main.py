@@ -17,13 +17,6 @@ def create_game(num_players):
     #Create good guys
     for i in range(num_players):
         gg = Good_Guy(i, 0, 0)
-        gg.update_strat("1-2-1")
-        gg.update_last_action("defense")
-        
-
-        #Print the good guy
-        #print(gg.gg_id)
-        
         list_of_good_guys.append(gg)
         
 
