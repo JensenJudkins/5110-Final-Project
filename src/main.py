@@ -58,6 +58,8 @@ def use_strategy_bg(bad_guy, good_guys):
     for good_guy in good_guys:
         if good_guy.def_lvl == min([gg.def_lvl for gg in good_guys]):
             lowest_defenses.append(good_guy)
+        # Reset all good guys to not being attacked last round
+        good_guy.update_attacked_last_round(False)
 
     good_guy = max(lowest_defenses, key=lambda x: x.bank)
     
