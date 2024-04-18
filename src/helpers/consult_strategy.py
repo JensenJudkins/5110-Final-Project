@@ -7,13 +7,15 @@
     - Late Planner: val (until attacked then) def, def, def, def...
     - 2-1-2: def, def, val, def, def, val...
     - Not Weakest: val (until weakest agent, then) def (until it's not the weakest agent any more)
+    - Analyst: val, def, val, val, (as long as it is not attacked), def (once it has been attacked)
+    - Copycat: val (if not attacked), def (if attacked)
 """
 import random
 from Actions import Actions
 class ConsultStrategy:
     def consult_strategy(gg):
         # Add a few more strategies
-        strategies = ["one_two_one", "late_planner", "two_one_two"]#, "not_weakest"]
+        strategies = ["one_two_one", "late_planner", "two_one_two", "analyst", "copycat"]#, "not_weakest"]
         # Randomly choose a new strategy
         pos = random.randint(0, (len(strategies) - 1))
         new_strategy = strategies[pos]
@@ -30,6 +32,10 @@ class ConsultStrategy:
             ConsultStrategy.late_planner(gg)
         elif gg.strat == "two_one_two":
             ConsultStrategy.two_one_two(gg)
+        elif gg.strat == "analyst":
+            ConsultStrategy.analyst(gg)
+        elif gg.strat == "copycat":
+            ConsultStrategy.copycat(gg)
         else:
             ConsultStrategy.not_weakest(gg)
 
@@ -58,6 +64,25 @@ class ConsultStrategy:
         else:
             Actions.gg_choose_defense(gg)
         return
+
+    # Analyst
+    def analyst(gg):
+        # Choose money, def, money, money until attacked and then choose def
+        if gg.num_moves == 1 or gg.num_moves == 3 or gg.num_moves == 4 or (gg.num_moves >= 5 and gg.attack_count < 1):
+            Actions.gg_choose_money(gg)
+        else:
+            Actions.gg_choose_defense(gg)
+        return
+
+    # Copycat
+    def copycat(gg):
+        # Choose money if not attacked, choose def if attacked
+        # if :
+        #     Actions.gg_choose_money(gg)
+        # else:
+        #     Actions.gg_choose_defense(gg)
+        # return
+        pass
 
     # Not Weakest
     def not_weakest(self):
