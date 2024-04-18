@@ -53,7 +53,7 @@ def get_strategy_bg(bad_guy):
     consult_strategy.ConsultStrategy.bad_guy_consult_strategy(bad_guy)
     return 0
 
-def use_strategy_bg(bad_guy, good_guys):
+def use_strategy_bg(bad_guy, good_guys, verbose):
     lowest_defenses = []
     for good_guy in good_guys:
         if good_guy.def_lvl == min([gg.def_lvl for gg in good_guys]):
@@ -63,13 +63,14 @@ def use_strategy_bg(bad_guy, good_guys):
 
     good_guy = max(lowest_defenses, key=lambda x: x.bank)
     
-    print("Bad guy: " + str(bad_guy.bg_id))
-    print("Attacking good guy: " + str(good_guy.gg_id))
-    print("Turn: " + str(bad_guy.num_moves))
-    print("Good guy def: " + str(good_guy.def_lvl))
-    print("Bad guy att: " + str(bad_guy.att_lvl))
-    print("Good guy bank: " + str(good_guy.bank))
-    print("Bad guy bank: " + str(bad_guy.bank) + "\n")
+    if verbose:
+        print("Bad guy: " + str(bad_guy.bg_id))
+        print("Attacking good guy: " + str(good_guy.gg_id))
+        print("Turn: " + str(bad_guy.num_moves))
+        print("Good guy def: " + str(good_guy.def_lvl))
+        print("Bad guy att: " + str(bad_guy.att_lvl))
+        print("Good guy bank: " + str(good_guy.bank))
+        print("Bad guy bank: " + str(bad_guy.bank) + "\n")
 
 
     bad_guy.num_moves += 1
@@ -105,10 +106,11 @@ def print_game_state(good_guys, bad_guys):
 
 #Main function to run the game
 def main():
-    good_guys = create_game(5)
-    bad_guys = create_bad_guy(3)
+    good_guys = create_game(2)
+    bad_guys = create_bad_guy(1)
+    verbose = False
 
-    print("Start of game")
+    print("-------------------------------------------------------Start of game-----------------------------------------------------------------")
     print_game_state(good_guys, bad_guys)
 
     for good_guy in good_guys:
@@ -123,10 +125,10 @@ def main():
             use_strategy_gg(good_guy)
 
         for bad_guy in bad_guys:
-            use_strategy_bg(bad_guy, good_guys)
+            use_strategy_bg(bad_guy, good_guys, verbose)
 
 
-    print("End of game\n")
+    print("------------------------------------------------------------------------End of game--------------------------------------------------------\n")
     print_game_state(good_guys, bad_guys)
 
 main()
