@@ -10,7 +10,7 @@ import numpy as np
 from helpers import consult_strategy
 from Good_Guy import Good_Guy
 from Bad_Guy import Bad_Guy
-      
+
 def create_game(num_players):
     list_of_good_guys = []
 
@@ -18,7 +18,7 @@ def create_game(num_players):
     for i in range(num_players):
         gg = Good_Guy(i, 0, 0)
         list_of_good_guys.append(gg)
-        
+
 
     return list_of_good_guys
 
@@ -49,10 +49,16 @@ def consult_strategy_bg(bad_guy):
     return 0
 
 def use_strategy_bg(bad_guy, good_guys):
+    lowest_defenses = []
+    for good_guy in good_guys:
+        if good_guy.def_lvl == min([gg.def_lvl for gg in good_guys]):
+            lowest_defenses.append(good_guy)
 
+    good_guy = max(lowest_defenses, key=lambda x: x.bank)
     #Find the good guy with the lowest defense
-    good_guy = min(good_guys, key=lambda x: x.def_lvl)
-    print("Good guy with lowest defense is " + str(good_guy.gg_id) + " on turn " + str(bad_guy.num_moves))
+    # good_guy = min(good_guys, key=lambda x: x.def_lvl)
+    print("Good guy id with lowest defense is " + str(good_guy.gg_id) + " on turn " + str(bad_guy.num_moves))
+    bad_guy.num_moves += 1
     #Will consult other file to determine action
     consult_strategy.ConsultStrategy.bad_guy_use_strategy(bad_guy, good_guy)
     return 0
@@ -92,28 +98,27 @@ def print_game_state(good_guys, bad_guys):
     return 0
 
 
-
 #Main function to run the game
 def main():
-    good_guys = create_game(2)
+    good_guys = create_game(5)
     bad_guys = create_bad_guy()
 
     print("Start of game")
     print_game_state(good_guys, bad_guys)
 
-    turns = 10
+    for good_guy in good_guys:
+        get_strategy_gg(good_guy)
+
+    turns = 20
     for turn in range(turns):
-        for good_guy in good_guys:
-            get_strategy_gg(good_guy)
-        
         for good_guy in good_guys:
             use_strategy_gg(good_guy)
 
         consult_strategy_bg(bad_guys)
         use_strategy_bg(bad_guys, good_guys)
-        
 
-    print("End of game")
+
+    print("End of game\n")
     print_game_state(good_guys, bad_guys)
 
 main()
