@@ -7,15 +7,19 @@ class Actions:
         gg.update_last_action("defense")
 
     def gg_choose_money(gg):
-        gg.bank += 1
+        gg.bank += 10
         gg.update_last_action("money")
 
     def bg_steal(bg, gg):
         #print("Attempting to steal from good guy" + str(gg.gg_id))
-        gg.bank -= 1
+        payout = float(gg.bank) * (.2 + .1 * (float(bg.att_lvl)-float(gg.def_lvl)))
+        if payout < 0.0:
+            payout = 0.0
+
+        gg.bank -= payout
         gg.increase_attack_count()
         gg.update_attacked_last_round(True)
-        bg.bank += 1
+        bg.bank += payout
         bg.update_last_action("steal")
 
     def bg_research(bg):

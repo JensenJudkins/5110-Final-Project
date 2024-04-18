@@ -62,7 +62,7 @@ def use_strategy_bg(bad_guy, good_guys, verbose):
         good_guy.update_attacked_last_round(False)
 
     good_guy = max(lowest_defenses, key=lambda x: x.bank)
-    
+
     if verbose:
         print("Bad guy: " + str(bad_guy.bg_id))
         print("Attacking good guy: " + str(good_guy.gg_id))
@@ -119,7 +119,7 @@ def main():
     for bad_guy in bad_guys:
         get_strategy_bg(bad_guy)
 
-    turns = 20
+    turns = 3
     for turn in range(turns):
         for good_guy in good_guys:
             use_strategy_gg(good_guy)

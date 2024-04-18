@@ -7,7 +7,7 @@ class Good_Guy:
     attacked_last_round = False
     #bank = 0
 
-    def __init__(self, gg_id, def_lvl=0, bank=0):
+    def __init__(self, gg_id, def_lvl=0, bank=100):
         self.gg_id = gg_id
         self.att_lvl = def_lvl
         self.bank = bank
