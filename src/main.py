@@ -24,9 +24,14 @@ def create_game(num_players):
 
 
 
-def create_bad_guy():
-    bg = Bad_Guy(0, 0, 0)
-    return bg
+def create_bad_guy(num_bad):
+    list_of_bad_guys = []
+    for i in range(num_bad):
+        bg = Bad_Guy(i, 0, 0)
+        list_of_bad_guys.append(bg)
+
+
+    return list_of_bad_guys
 
 
 
@@ -40,7 +45,7 @@ def use_strategy_gg(good_guy):
     consult_strategy.ConsultStrategy.use_strategy(good_guy)
     return 0
 
-def consult_strategy_bg(bad_guy):
+def get_strategy_bg(bad_guy):
     #Will consult other file to determine action
     #lowest hanging fruit always - picks lowest defense every time
     #Using the function "mathmatically" the best option - payoff = ggbank *.2 * (1 + (defense - attack))
@@ -55,23 +60,16 @@ def use_strategy_bg(bad_guy, good_guys):
             lowest_defenses.append(good_guy)
 
     good_guy = max(lowest_defenses, key=lambda x: x.bank)
-    #Find the good guy with the lowest defense
-    # good_guy = min(good_guys, key=lambda x: x.def_lvl)
-    print("Good guy id with lowest defense is " + str(good_guy.gg_id) + " on turn " + str(bad_guy.num_moves))
+    
+    print("Bad guy " + str(bad_guy.bg_id) + " attacking good guy " + str(good_guy.gg_id) + " on turn " + str(bad_guy.num_moves))
+
+
     bad_guy.num_moves += 1
     #Will consult other file to determine action
     consult_strategy.ConsultStrategy.bad_guy_use_strategy(bad_guy, good_guy)
     return 0
 
-#good guys take their action and update their stats
-def take_action_gg(player, action, turn):
-    #update the dataframe for all attributes except for turn
-    return 0
 
-#bad guy takes their action and updates their stats along with the good guys
-def take_action_bg(bad_guy, action, turn):
-    #Will consult other file to determine action
-    return 0
 
 #Prints the game state for tracking
 def print_game_state(good_guys, bad_guys):
@@ -85,15 +83,14 @@ def print_game_state(good_guys, bad_guys):
         print("Attack Count:" + str(gg.attack_count))
         print("\n")
 
-    print("Bad Guy")
-    print("Bad guy ID:" + str(bad_guys.bg_id))
-    print("Bank:" + str(bad_guys.bank))
-    print("Attack Level:" + str(bad_guys.att_lvl))
-    print("Strategy:" + str(bad_guys.strat))
-    print("Last Action:" + str(bad_guys.last_action))
-    print("Number of Moves:" + str(bad_guys.num_moves))
-    print("Number of Steals:" + str(bad_guys.num_steals))
-    print("\n")
+    print("Bad Guys")
+    for bg in bad_guys:
+        print("Bad guy ID:" + str(bg.bg_id))
+        print("Bank:" + str(bg.bank))
+        print("Attack Level:" + str(bg.att_lvl))
+        print("Strategy:" + str(bg.strat))
+        print("Last Action:" + str(bg.last_action))
+        print("\n")
 
     return 0
 
@@ -101,7 +98,7 @@ def print_game_state(good_guys, bad_guys):
 #Main function to run the game
 def main():
     good_guys = create_game(5)
-    bad_guys = create_bad_guy()
+    bad_guys = create_bad_guy(3)
 
     print("Start of game")
     print_game_state(good_guys, bad_guys)
@@ -109,13 +106,16 @@ def main():
     for good_guy in good_guys:
         get_strategy_gg(good_guy)
 
+    for bad_guy in bad_guys:
+        get_strategy_bg(bad_guy)
+
     turns = 20
     for turn in range(turns):
         for good_guy in good_guys:
             use_strategy_gg(good_guy)
 
-        consult_strategy_bg(bad_guys)
-        use_strategy_bg(bad_guys, good_guys)
+        for bad_guy in bad_guys:
+            use_strategy_bg(bad_guy, good_guys)
 
 
     print("End of game\n")
