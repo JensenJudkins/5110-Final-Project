@@ -61,7 +61,13 @@ def use_strategy_bg(bad_guy, good_guys):
 
     good_guy = max(lowest_defenses, key=lambda x: x.bank)
     
-    print("Bad guy " + str(bad_guy.bg_id) + " attacking good guy " + str(good_guy.gg_id) + " on turn " + str(bad_guy.num_moves))
+    print("Bad guy: " + str(bad_guy.bg_id))
+    print("Attacking good guy: " + str(good_guy.gg_id))
+    print("Turn: " + str(bad_guy.num_moves))
+    print("Good guy def: " + str(good_guy.def_lvl))
+    print("Bad guy att: " + str(bad_guy.att_lvl))
+    print("Good guy bank: " + str(good_guy.bank))
+    print("Bad guy bank: " + str(bad_guy.bank) + "\n")
 
 
     bad_guy.num_moves += 1
