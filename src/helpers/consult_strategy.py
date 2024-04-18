@@ -77,12 +77,11 @@ class ConsultStrategy:
     # Copycat
     def copycat(gg):
         # Choose money if not attacked, choose def if attacked
-        # if :
-        #     Actions.gg_choose_money(gg)
-        # else:
-        #     Actions.gg_choose_defense(gg)
-        # return
-        pass
+        if gg.attacked_last_round:
+            Actions.gg_choose_defense(gg)
+        else:
+            Actions.gg_choose_money(gg)
+        return
 
     # Not Weakest
     def not_weakest(self):
