@@ -114,7 +114,7 @@ class ConsultStrategy:
 
 
     def bad_guy_consult_strategy(bg):
-        strategies = ["att-att-res", "one-one"]
+        strategies = ["att-att-res", "one-one", "random", "attack_rich", "attack_strong", "attack_poor"]
         # Randomly choose a new strategy
         pos = random.randint(0, (len(strategies) - 1))
         new_strategy = strategies[pos]
@@ -122,12 +122,56 @@ class ConsultStrategy:
         #print(bg.strat)
         return
 
-    def bad_guy_use_strategy(bg, gg, verbose):
+    def bad_guy_use_strategy(bg, gg, verbose, good_guys):
         if bg.strat == "att-att-res":
             ConsultStrategy.att_att_res(bg, gg,verbose)
-        else:
+        elif bg.strat == "one-one":
             ConsultStrategy.one_one(bg, gg,verbose)
+        elif bg.strat == "random":
+            ConsultStrategy.random_bg(bg,verbose)
+        elif bg.strat == "attack_rich":
+            ConsultStrategy.attack_rich(bg, gg, verbose, good_guys)
+        elif bg.strat == "attack_strong":
+            ConsultStrategy.attack_strong(bg, gg, verbose, good_guys)
+        elif bg.strat == "attack_poor":
+            ConsultStrategy.attack_poor(bg, gg, verbose, good_guys)
+
         return
+    
+    def attack_poor(bg, gg, verbose, good_guys):
+        # Attack the poorest good guy and research every 3rd move
+        poorest_gg = min([gg.bank for gg in good_guys])
+        target_gg = [gg for gg in good_guys if gg.bank == poorest_gg][0]
+        if bg.num_moves % 3 == 0:
+            Actions.bg_research(bg, verbose)
+        else:
+            Actions.bg_steal(bg, target_gg, verbose)
+        return
+    
+    
+    def attack_strong(bg, gg, verbose, good_guys):
+        #Attack the strongest good guy and research every 3rd move
+        strongest_gg = max([gg.bank for gg in good_guys])
+        target_gg = [gg for gg in good_guys if gg.bank == strongest_gg][0]
+        if bg.num_moves % 3 == 0:
+            Actions.bg_research(bg, verbose)
+        else:
+            Actions.bg_steal(bg, target_gg, verbose)
+        return
+    
+    
+    def attack_rich(bg, gg, verbose, good_guys):
+        #Attack the richest good guy and research every 3rd move
+        richest_gg = max([gg.bank for gg in good_guys])
+        target_gg = [gg for gg in good_guys if gg.bank == richest_gg][0]
+        if bg.num_moves % 3 == 0:
+            Actions.bg_research(bg, verbose)
+        else:
+            Actions.bg_steal(bg, target_gg, verbose)
+        return
+    
+
+
 
     def att_att_res(bg, gg,verbose):
         if bg.num_moves % 3 == 0:

@@ -49,7 +49,7 @@ def use_strategy_bg(bad_guy, good_guys, verbose):
     good_guy = max(lowest_defenses, key=lambda x: x.bank)
     bad_guy.num_moves += 1
     #Will consult other file to determine action
-    consult_strategy.ConsultStrategy.bad_guy_use_strategy(bad_guy, good_guy, verbose)
+    consult_strategy.ConsultStrategy.bad_guy_use_strategy(bad_guy, good_guy, verbose, good_guys)
     return 0
 
 
