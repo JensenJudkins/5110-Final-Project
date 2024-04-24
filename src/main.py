@@ -27,9 +27,9 @@ def get_strategy_gg(good_guy):
     consult_strategy.ConsultStrategy.consult_strategy(good_guy)
     return 0
 
-def use_strategy_gg(good_guy,verbose):
+def use_strategy_gg(good_guy,verbose, good_guys):
     #This will use the strategy assigned to the good guy
-    consult_strategy.ConsultStrategy.use_strategy(good_guy,verbose)
+    consult_strategy.ConsultStrategy.use_strategy(good_guy,verbose, good_guys)
     return 0
 
 def get_strategy_bg(bad_guy):
@@ -101,7 +101,7 @@ def main(gg_count, bg_count,turn_count, verbose):
     for turn in range(turns):
         print("---------------------------------Turn " + str(turn) + "---------------------------------")
         for good_guy in good_guys:
-            use_strategy_gg(good_guy, verbose)
+            use_strategy_gg(good_guy, verbose, good_guys)
 
         for bad_guy in bad_guys:
             use_strategy_bg(bad_guy, good_guys, verbose)

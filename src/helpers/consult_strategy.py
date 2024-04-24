@@ -24,7 +24,7 @@ class ConsultStrategy:
         return
 
     # choose defense or value
-    def use_strategy(gg, verbose):
+    def use_strategy(gg, verbose, good_guys):
         gg.num_moves += 1
         if gg.strat == "one_two_one":
             ConsultStrategy.one_two_one(gg,verbose)
@@ -37,7 +37,7 @@ class ConsultStrategy:
         elif gg.strat == "copycat":
             ConsultStrategy.copycat(gg,verbose)
         else:
-            ConsultStrategy.not_weakest(gg,verbose)
+            ConsultStrategy.not_weakest(gg,good_guys,verbose)
 
     # 1-2-1
     def one_two_one(gg,verbose):
@@ -84,8 +84,12 @@ class ConsultStrategy:
         return
 
     # Not Weakest
-    def not_weakest(self):
-        pass
+    def not_weakest(gg, good_guys, verbose):
+        # Choose money until it is the weakest agent, then choose def
+        if gg.def_lvl == min([gg.def_lvl for gg in good_guys]):
+            Actions.gg_choose_defense(gg, verbose)
+        else:
+            Actions.gg_choose_money(gg, verbose)
 
 
     def bad_guy_consult_strategy(bg):
