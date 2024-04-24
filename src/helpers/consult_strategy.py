@@ -15,7 +15,7 @@ from Actions import Actions
 class ConsultStrategy:
     def consult_strategy(gg):
         # Add a few more strategies
-        strategies = ["one_two_one", "late_planner", "two_one_two", "analyst", "copycat"]#, "not_weakest"]
+        strategies = ["one_two_one", "late_planner", "two_one_two", "analyst", "copycat", "not_weakest", "be_strongest"]
         # Randomly choose a new strategy
         pos = random.randint(0, (len(strategies) - 1))
         new_strategy = strategies[pos]
@@ -36,8 +36,10 @@ class ConsultStrategy:
             ConsultStrategy.analyst(gg,verbose)
         elif gg.strat == "copycat":
             ConsultStrategy.copycat(gg,verbose)
-        else:
+        elif gg.strat == "not_weakest":
             ConsultStrategy.not_weakest(gg,good_guys,verbose)
+        elif gg.strat == "be_strongest":
+            ConsultStrategy.be_strongest(gg,good_guys,verbose)
 
     # 1-2-1
     def one_two_one(gg,verbose):
@@ -91,6 +93,14 @@ class ConsultStrategy:
         else:
             Actions.gg_choose_money(gg, verbose)
 
+    # Be Strongest
+    def be_strongest(gg, good_guys, verbose):
+        # Choose defense until it is the strongest agent, then choose money
+        if gg.def_lvl == max([gg.def_lvl for gg in good_guys]):
+            Actions.gg_choose_money(gg, verbose)
+        else:
+            Actions.gg_choose_defense(gg, verbose)
+            
 
     def bad_guy_consult_strategy(bg):
         strategies = ["att-att-res", "one-one"]
