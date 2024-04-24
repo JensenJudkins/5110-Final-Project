@@ -78,7 +78,20 @@ def print_game_state(good_guys, bad_guys):
     return 0
 
 
+def save_results(good_guys, bad_guys):
+    #Save good guy results to a csv file
+    with open("good_guy_results.csv", "w") as file:
+        file.write("Good Guy ID, Bank, Defense Level, Strategy, Last Action, Attack Count\n")
+        for gg in good_guys:
+            file.write(str(gg.gg_id) + "," + str(gg.bank) + "," + str(gg.def_lvl) + "," + str(gg.strat) + "," + str(gg.last_action) + "," + str(gg.attack_count) + "\n")
 
+    #Save bad guy results to a csv file
+    with open("bad_guy_results.csv", "w") as file:
+        file.write("Bad Guy ID, Bank, Attack Level, Strategy, Last Action\n")
+        for bg in bad_guys:
+            file.write(str(bg.bg_id) + "," + str(bg.bank) + "," + str(bg.att_lvl) + "," + str(bg.strat) + "," + str(bg.last_action) + "\n")
+
+    return 0
 
 
 #Main function to run the game
@@ -109,6 +122,7 @@ def main(gg_count, bg_count,turn_count, verbose):
     print("\n")
     print("------------------------------------------------------------------------End of game--------------------------------------------------------\n")
     print_game_state(good_guys, bad_guys)
+    save_results(good_guys, bad_guys)
 
 
 #Make sure arguments are valid and catch exceptions
