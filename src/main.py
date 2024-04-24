@@ -31,9 +31,9 @@ def get_strategy_gg(good_guy):
     consult_strategy.ConsultStrategy.consult_strategy(good_guy)
     return 0
 
-def use_strategy_gg(good_guy):
+def use_strategy_gg(good_guy,verbose):
     #This will use the strategy assigned to the good guy
-    consult_strategy.ConsultStrategy.use_strategy(good_guy)
+    consult_strategy.ConsultStrategy.use_strategy(good_guy,verbose)
     return 0
 
 def get_strategy_bg(bad_guy):
@@ -90,7 +90,7 @@ def print_game_state(good_guys, bad_guys):
 def main():
     good_guys = create_game(2)
     bad_guys = create_bad_guy(1)
-    verbose = True
+    verbose = False
 
     print("-------------------------------------------------------Start of game-----------------------------------------------------------------")
     print("\n")
@@ -107,12 +107,12 @@ def main():
     for turn in range(turns):
         print("---------------------------------Turn " + str(turn) + "---------------------------------")
         for good_guy in good_guys:
-            use_strategy_gg(good_guy)
+            use_strategy_gg(good_guy, verbose)
 
         for bad_guy in bad_guys:
             use_strategy_bg(bad_guy, good_guys, verbose)
 
-
+    print("\n")
     print("------------------------------------------------------------------------End of game--------------------------------------------------------\n")
     print_game_state(good_guys, bad_guys)
 

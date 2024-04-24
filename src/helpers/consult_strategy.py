@@ -24,63 +24,63 @@ class ConsultStrategy:
         return
 
     # choose defense or value
-    def use_strategy(gg):
+    def use_strategy(gg, verbose):
         gg.num_moves += 1
         if gg.strat == "one_two_one":
-            ConsultStrategy.one_two_one(gg)
+            ConsultStrategy.one_two_one(gg,verbose)
         elif gg.strat == "late_planner":
-            ConsultStrategy.late_planner(gg)
+            ConsultStrategy.late_planner(gg,verbose)
         elif gg.strat == "two_one_two":
-            ConsultStrategy.two_one_two(gg)
+            ConsultStrategy.two_one_two(gg,verbose)
         elif gg.strat == "analyst":
-            ConsultStrategy.analyst(gg)
+            ConsultStrategy.analyst(gg,verbose)
         elif gg.strat == "copycat":
-            ConsultStrategy.copycat(gg)
+            ConsultStrategy.copycat(gg,verbose)
         else:
-            ConsultStrategy.not_weakest(gg)
+            ConsultStrategy.not_weakest(gg,verbose)
 
     # 1-2-1
-    def one_two_one(gg):
+    def one_two_one(gg,verbose):
         # Start with defense and choose defense every 3rd move
         if gg.num_moves % 3 == 0:
-            Actions.gg_choose_defense(gg)
+            Actions.gg_choose_defense(gg, verbose)
         else:
-            Actions.gg_choose_money(gg)
+            Actions.gg_choose_money(gg, verbose)
         return
 
     # Late Planner
-    def late_planner(gg):
+    def late_planner(gg, verbose):
         if gg.attack_count != 0:
-            Actions.gg_choose_defense(gg)
+            Actions.gg_choose_defense(gg, verbose)
         else:
-            Actions.gg_choose_money(gg)
+            Actions.gg_choose_money(gg,verbose)
         return
 
     # 2-1-2
-    def two_one_two(gg):
+    def two_one_two(gg, verbose):
         # Defend twice and then choose money
         if (gg.num_moves + 1) % 3 == 0:
-            Actions.gg_choose_money(gg)
+            Actions.gg_choose_money(gg,verbose)
         else:
-            Actions.gg_choose_defense(gg)
+            Actions.gg_choose_defense(gg,verbose)
         return
 
     # Analyst
-    def analyst(gg):
+    def analyst(gg, verbose):
         # Choose money, def, money, money until attacked and then choose def
         if gg.num_moves == 1 or gg.num_moves == 3 or gg.num_moves == 4 or (gg.num_moves >= 5 and gg.attack_count < 1):
-            Actions.gg_choose_money(gg)
+            Actions.gg_choose_money(gg,verbose)
         else:
-            Actions.gg_choose_defense(gg)
+            Actions.gg_choose_defense(gg,verbose)
         return
 
     # Copycat
-    def copycat(gg):
+    def copycat(gg, verbose):
         # Choose money if not attacked, choose def if attacked
         if gg.attacked_last_round:
-            Actions.gg_choose_defense(gg)
+            Actions.gg_choose_defense(gg,verbose)
         else:
-            Actions.gg_choose_money(gg)
+            Actions.gg_choose_money(gg,verbose)
         return
 
     # Not Weakest
@@ -105,62 +105,21 @@ class ConsultStrategy:
         return
 
     def att_att_res(bg, gg,verbose):
-        good_guy = gg
-        bad_guy = bg
         if bg.num_moves % 3 == 0:
-            print("Bad Guy Researching")
-            if verbose:
-                print("Bad guy: " + str(bad_guy.bg_id))
-                print("Bad guy current attack level: " + str(bad_guy.att_lvl))
-                print("Bad guy new attack level: " + str(bad_guy.att_lvl + 1))
-                
-            Actions.bg_research(bg)
+            Actions.bg_research(bg, verbose)
             # bg.num_moves += 1
             #print("research")
         else:
-            #print the action took by the bad guy
-            if verbose:
-                print("Bad guy: " + str(bad_guy.bg_id))
-                print("Attacking target good guy: " + str(good_guy.gg_id))
-                print("Turn: " + str(bad_guy.num_moves))
-                print("Good guy def: " + str(good_guy.def_lvl))
-                print("Good guy bank: " + str(good_guy.bank))
-                print("Good guy strat: " + str(good_guy.strat))
-                print("Bad guy att: " + str(bad_guy.att_lvl))
-                print("Bad guy bank: " + str(bad_guy.bank))
-                print("Bad guy strat: " + str(bad_guy.strat))
-                print("Expected Payout (POV of BG): " + str(float(good_guy.bank) * (.2 + .1 * (float(bad_guy.att_lvl)-float(good_guy.def_lvl)))))
-                print("\n")
-
-            Actions.bg_steal(bg, gg)
+            Actions.bg_steal(bg, gg,verbose)
             #print("steal")
         return
 
     def one_one(bg, gg, verbose):
-        bad_guy = bg
-        good_guy = gg
         if bg.num_moves % 2 == 0:
-            print("Bad Guy Researching")
-            if verbose:
-                print("Bad guy: " + str(bad_guy.bg_id))
-                print("Bad guy current attack level: " + str(bad_guy.att_lvl))
-                print("Bad guy new attack level: " + str(bad_guy.att_lvl + 1))
-            Actions.bg_research(bg)
+            Actions.bg_research(bg, verbose)
         else:
             #print the action took by the bad guy
-            if verbose:
-                print("Bad guy: " + str(bad_guy.bg_id))
-                print("Attacking target good guy: " + str(good_guy.gg_id))
-                print("Turn: " + str(bad_guy.num_moves))
-                print("Good guy def: " + str(good_guy.def_lvl))
-                print("Good guy bank: " + str(good_guy.bank))
-                print("Good guy strat: " + str(good_guy.strat))
-                print("Bad guy att: " + str(bad_guy.att_lvl))
-                print("Bad guy bank: " + str(bad_guy.bank))
-                print("Bad guy strat: " + str(bad_guy.strat))
-                print("Expected Payout (POV of BG): " + str(float(good_guy.bank) * (.2 + .1 * (float(bad_guy.att_lvl)-float(good_guy.def_lvl)))))
-                print("\n")
-            Actions.bg_steal(bg, gg)
+            Actions.bg_steal(bg, gg, verbose)
 
                 
 
