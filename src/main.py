@@ -75,7 +75,7 @@ def use_strategy_bg(bad_guy, good_guys, verbose):
 
 #Prints the game state for tracking
 def print_game_state(good_guys, bad_guys):
-    print("Good Guys")
+    print("------------Good Guys---------------")
     for gg in good_guys:
         print("Good guy ID:" + str(gg.gg_id))
         print("Bank:" + str(gg.bank))
@@ -85,7 +85,7 @@ def print_game_state(good_guys, bad_guys):
         print("Attack Count:" + str(gg.attack_count))
         print("\n")
 
-    print("Bad Guys")
+    print("--------------Bad Guys-----------------")
     for bg in bad_guys:
         print("Bad guy ID:" + str(bg.bg_id))
         print("Bank:" + str(bg.bank))
@@ -104,7 +104,7 @@ def main():
     verbose = True
 
     print("-------------------------------------------------------Start of game-----------------------------------------------------------------")
-    
+    print("\n")
 
     for good_guy in good_guys:
         get_strategy_gg(good_guy)
