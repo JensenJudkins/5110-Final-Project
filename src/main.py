@@ -81,13 +81,13 @@ def print_game_state(good_guys, bad_guys):
 def save_results(good_guys, bad_guys):
     #Save good guy results to a csv file
     with open("good_guy_results.csv", "w") as file:
-        file.write("Good Guy ID, Bank, Defense Level, Strategy, Last Action, Attack Count, Turns\n")
+        file.write("Good Guy ID,Bank,Defense Level,Strategy,Last Action,Attack Count,Turns\n")
         for gg in good_guys:
             file.write(str(gg.gg_id) + "," + str(gg.bank) + "," + str(gg.def_lvl) + "," + str(gg.strat) + "," + str(gg.last_action) + "," + str(gg.attack_count) + "," + str(gg.num_moves) + "\n")
 
     #Save bad guy results to a csv file
     with open("bad_guy_results.csv", "w") as file:
-        file.write("Bad Guy ID, Bank, Attack Level, Strategy, Last Action, Steals, Turns\n")
+        file.write("Bad Guy ID,Bank,Attack Level,Strategy,Last Action,Steals,Turns\n")
         for bg in bad_guys:
             file.write(str(bg.bg_id) + "," + str(bg.bank) + "," + str(bg.att_lvl) + "," + str(bg.strat) + "," + str(bg.last_action) + "," + str(bg.num_steals) + "," + str(bg.num_moves) + "\n")
 
