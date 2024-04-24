@@ -7,8 +7,8 @@ class Actions:
         gg.update_last_action("defense")
         if verbose:
             print("Good guy " + str(gg.gg_id) + " chose defense")
-            print("Good guy old defense level: " + str(gg.def_lvl))
-            print("Good guy new defense level: " + str(gg.def_lvl+1))
+            print("Good guy old defense level: " + str(gg.def_lvl-1))
+            print("Good guy new defense level: " + str(gg.def_lvl))
             print("\n")
 
     def gg_choose_money(gg, verbose):
