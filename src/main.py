@@ -125,12 +125,14 @@ def main(gg_count, bg_count,turn_count, verbose):
     save_results(good_guys, bad_guys)
 
 
+
+
+
 #Make sure arguments are valid and catch exceptions
 try:
     int(sys.argv[1])
     int(sys.argv[2])
     int(sys.argv[3])
-    bool(sys.argv[4])
 except:
     print("Invalid arguments")
     print("Usage: python3 main.py [number of good guys] [number of bad guys] [number of turns] [verbose]")
@@ -138,28 +140,21 @@ except:
     print("Example: python3 main.py 2 1 5 True")
     exit(0)
 
-if(len(sys.argv) != 5 and len(sys.argv) != 4 and len(sys.argv) != 3 and len(sys.argv) != 2 and len(sys.argv) != 1):
-    print("Invalid number of arguments")
-    print("Usage: python3 main.py [number of good guys] [number of bad guys] [number of turns] [verbose]")
-    print("Example: python3 main.py 2 1 5 False")
-    print("Example: python3 main.py 2 1 5 True")
-    exit(0)
 
-if(len(sys.argv) == 1):
-    main(2,1,5,False)
-elif(len(sys.argv) == 2):
-    main(int(sys.argv[1]),1,5,False)
-elif(len(sys.argv) == 3):
-    main(int(sys.argv[1]), int(sys.argv[2]), 5, False)
-elif(len(sys.argv) == 4):
-    main(int(sys.argv[1]), int(sys.argv[2]),int(sys.argv[3]), False)
-elif(len(sys.argv) == 5):
-    main(int(sys.argv[1]), int(sys.argv[2]),int(sys.argv[3]), bool(sys.argv[4]))
-else:
-    print("Invalid number of arguments")
-    print("Usage: python3 main.py [number of good guys] [number of bad guys] [number of turns] [verbose]")
-    print("Example: python3 main.py 2 1 5 False")
-    print("Example: python3 main.py 2 1 5 True")
+
+
+#Sets verbose default to false and will only work if there is a 4th argument provided and it must be 'True'
+verbose = False
+if len(sys.argv) >= 5:
+    if sys.argv[4] == "True":
+        verbose = True
+    else:
+        verbose = False
+        
+#Run the game
+main(int(sys.argv[1]), int(sys.argv[2]), int(sys.argv[3]), verbose)
+
+
     
 
 
