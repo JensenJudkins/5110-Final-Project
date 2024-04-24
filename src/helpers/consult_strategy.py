@@ -128,7 +128,7 @@ class ConsultStrategy:
         elif bg.strat == "one-one":
             ConsultStrategy.one_one(bg, gg,verbose)
         elif bg.strat == "random":
-            ConsultStrategy.random_bg(bg,verbose)
+            ConsultStrategy.random_bg(bg,verbose, good_guys)
         elif bg.strat == "attack_rich":
             ConsultStrategy.attack_rich(bg, gg, verbose, good_guys)
         elif bg.strat == "attack_strong":
@@ -169,6 +169,14 @@ class ConsultStrategy:
         else:
             Actions.bg_steal(bg, target_gg, verbose)
         return
+
+    def random_bg(bg, verbose, good_guys):
+        #Randomly attack or research and choose random targets
+        pos = random.randint(0, 1)
+        if pos == 0:
+            Actions.bg_research(bg, verbose)
+        else:
+            Actions.bg_steal(bg, random.choice(good_guys), verbose)
     
 
 

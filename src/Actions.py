@@ -25,6 +25,7 @@ class Actions:
         #print("Attempting to steal from good guy" + str(gg.gg_id))
         bad_guy = bg
         good_guy = gg
+        bg.num_steals += 1
         if verbose:
                 print("Bad guy: " + str(bad_guy.bg_id))
                 print("Attacking target good guy: " + str(good_guy.gg_id))
