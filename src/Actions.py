@@ -41,6 +41,8 @@ class Actions:
         payout = float(gg.bank) * (.2 + .1 * (float(bg.att_lvl)-float(gg.def_lvl)))
         if payout < 0.0:
             payout = 0.0
+        if payout > gg.bank:
+            payout = gg.bank
 
         gg.bank -= payout
         gg.increase_attack_count()
