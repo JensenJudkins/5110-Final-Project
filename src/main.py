@@ -1,36 +1,27 @@
-#Game tracked by a pandas dataframe
-#Game is played my multiple players which are rows in the dataframe
-#Each 'good guy' has a column for bank money, defense level, strategy assigned, what action they last took, number of times they have been attacked
-#Each 'bad guy' has a column for bank money, attack level, strategy assigned
+#MAIN FILE TO RUN THE GAME
 
 import pandas as pd
 import numpy as np
-
-
 from helpers import consult_strategy
 from Good_Guy import Good_Guy
 from Bad_Guy import Bad_Guy
 
 def create_game(num_players):
     list_of_good_guys = []
-
     #Create good guys
     for i in range(num_players):
         gg = Good_Guy(i, 0, 0)
         list_of_good_guys.append(gg)
-
-
     return list_of_good_guys
 
 
 
 def create_bad_guy(num_bad):
     list_of_bad_guys = []
+    #Create bad guys
     for i in range(num_bad):
         bg = Bad_Guy(i, 0, 0)
         list_of_bad_guys.append(bg)
-
-
     return list_of_bad_guys
 
 
@@ -46,10 +37,7 @@ def use_strategy_gg(good_guy):
     return 0
 
 def get_strategy_bg(bad_guy):
-    #Will consult other file to determine action
-    #lowest hanging fruit always - picks lowest defense every time
-    #Using the function "mathmatically" the best option - payoff = ggbank *.2 * (1 + (defense - attack))
-    #Incognito attack - where bg attacks every 3 turn
+    #Will consult other file to get strategy assignment
     consult_strategy.ConsultStrategy.bad_guy_consult_strategy(bad_guy)
     return 0
 
@@ -61,16 +49,21 @@ def use_strategy_bg(bad_guy, good_guys, verbose):
         # Reset all good guys to not being attacked last round
         good_guy.update_attacked_last_round(False)
 
+    #THIS IS THE TARGET GOOD GUY
     good_guy = max(lowest_defenses, key=lambda x: x.bank)
-
+    #print the action took by the bad guy
     if verbose:
         print("Bad guy: " + str(bad_guy.bg_id))
-        print("Attacking good guy: " + str(good_guy.gg_id))
+        print("Attacking target good guy: " + str(good_guy.gg_id))
         print("Turn: " + str(bad_guy.num_moves))
         print("Good guy def: " + str(good_guy.def_lvl))
-        print("Bad guy att: " + str(bad_guy.att_lvl))
         print("Good guy bank: " + str(good_guy.bank))
-        print("Bad guy bank: " + str(bad_guy.bank) + "\n")
+        print("Good guy strat: " + str(good_guy.strat))
+        print("Bad guy att: " + str(bad_guy.att_lvl))
+        print("Bad guy bank: " + str(bad_guy.bank))
+        print("Bad guy strat: " + str(bad_guy.strat))
+        print("Payout of this attack (no def upgrade): " + str(float(good_guy.bank) * (.2 + .1 * (float(bad_guy.att_lvl)-float(good_guy.def_lvl)))))
+        print("\n")
 
 
     bad_guy.num_moves += 1
@@ -108,19 +101,22 @@ def print_game_state(good_guys, bad_guys):
 def main():
     good_guys = create_game(2)
     bad_guys = create_bad_guy(1)
-    verbose = False
+    verbose = True
 
     print("-------------------------------------------------------Start of game-----------------------------------------------------------------")
-    print_game_state(good_guys, bad_guys)
+    
 
     for good_guy in good_guys:
         get_strategy_gg(good_guy)
 
     for bad_guy in bad_guys:
         get_strategy_bg(bad_guy)
+    
+    print_game_state(good_guys, bad_guys)
 
     turns = 3
     for turn in range(turns):
+        print("---------------------------------Turn " + str(turn) + "---------------------------------")
         for good_guy in good_guys:
             use_strategy_gg(good_guy)
 
