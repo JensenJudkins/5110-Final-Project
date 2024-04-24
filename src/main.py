@@ -1,10 +1,8 @@
 #MAIN FILE TO RUN THE GAME
-
-import pandas as pd
-import numpy as np
 from helpers import consult_strategy
 from Good_Guy import Good_Guy
 from Bad_Guy import Bad_Guy
+import sys
 
 def create_game(num_players):
     list_of_good_guys = []
@@ -15,7 +13,6 @@ def create_game(num_players):
     return list_of_good_guys
 
 
-
 def create_bad_guy(num_bad):
     list_of_bad_guys = []
     #Create bad guys
@@ -23,7 +20,6 @@ def create_bad_guy(num_bad):
         bg = Bad_Guy(i, 0, 0)
         list_of_bad_guys.append(bg)
     return list_of_bad_guys
-
 
 
 def get_strategy_gg(good_guy):
@@ -51,10 +47,6 @@ def use_strategy_bg(bad_guy, good_guys, verbose):
 
     #THIS IS THE TARGET GOOD GUY
     good_guy = max(lowest_defenses, key=lambda x: x.bank)
-    
-    #Will consult other file to determine action
-    
-
     bad_guy.num_moves += 1
     #Will consult other file to determine action
     consult_strategy.ConsultStrategy.bad_guy_use_strategy(bad_guy, good_guy, verbose)
@@ -86,12 +78,14 @@ def print_game_state(good_guys, bad_guys):
     return 0
 
 
-#Main function to run the game
-def main():
-    good_guys = create_game(2)
-    bad_guys = create_bad_guy(1)
-    verbose = False
 
+
+
+#Main function to run the game
+def main(gg_count, bg_count,turn_count, verbose):
+    good_guys = create_game(gg_count)
+    bad_guys = create_bad_guy(bg_count)
+    
     print("-------------------------------------------------------Start of game-----------------------------------------------------------------")
     print("\n")
 
@@ -103,7 +97,7 @@ def main():
     
     print_game_state(good_guys, bad_guys)
 
-    turns = 3
+    turns = turn_count
     for turn in range(turns):
         print("---------------------------------Turn " + str(turn) + "---------------------------------")
         for good_guy in good_guys:
@@ -116,6 +110,45 @@ def main():
     print("------------------------------------------------------------------------End of game--------------------------------------------------------\n")
     print_game_state(good_guys, bad_guys)
 
-main()
+
+#Make sure arguments are valid and catch exceptions
+try:
+    int(sys.argv[1])
+    int(sys.argv[2])
+    int(sys.argv[3])
+    bool(sys.argv[4])
+except:
+    print("Invalid arguments")
+    print("Usage: python3 main.py [number of good guys] [number of bad guys] [number of turns] [verbose]")
+    print("Example: python3 main.py 2 1 5 False")
+    print("Example: python3 main.py 2 1 5 True")
+    exit(0)
+
+if(len(sys.argv) != 5 and len(sys.argv) != 4 and len(sys.argv) != 3 and len(sys.argv) != 2 and len(sys.argv) != 1):
+    print("Invalid number of arguments")
+    print("Usage: python3 main.py [number of good guys] [number of bad guys] [number of turns] [verbose]")
+    print("Example: python3 main.py 2 1 5 False")
+    print("Example: python3 main.py 2 1 5 True")
+    exit(0)
+
+if(len(sys.argv) == 1):
+    main(2,1,5,False)
+elif(len(sys.argv) == 2):
+    main(int(sys.argv[1]),1,5,False)
+elif(len(sys.argv) == 3):
+    main(int(sys.argv[1]), int(sys.argv[2]), 5, False)
+elif(len(sys.argv) == 4):
+    main(int(sys.argv[1]), int(sys.argv[2]),int(sys.argv[3]), False)
+elif(len(sys.argv) == 5):
+    main(int(sys.argv[1]), int(sys.argv[2]),int(sys.argv[3]), bool(sys.argv[4]))
+else:
+    print("Invalid number of arguments")
+    print("Usage: python3 main.py [number of good guys] [number of bad guys] [number of turns] [verbose]")
+    print("Example: python3 main.py 2 1 5 False")
+    print("Example: python3 main.py 2 1 5 True")
+    
+
+
+
 
 
