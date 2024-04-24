@@ -97,29 +97,72 @@ class ConsultStrategy:
         #print(bg.strat)
         return
 
-    def bad_guy_use_strategy(bg, gg):
+    def bad_guy_use_strategy(bg, gg, verbose):
         if bg.strat == "att-att-res":
-            ConsultStrategy.att_att_res(bg, gg)
+            ConsultStrategy.att_att_res(bg, gg,verbose)
         else:
-            ConsultStrategy.one_one(bg, gg)
+            ConsultStrategy.one_one(bg, gg,verbose)
         return
 
-    def att_att_res(bg, gg):
+    def att_att_res(bg, gg,verbose):
+        good_guy = gg
+        bad_guy = bg
         if bg.num_moves % 3 == 0:
+            print("Bad Guy Researching")
+            if verbose:
+                print("Bad guy: " + str(bad_guy.bg_id))
+                print("Bad guy current attack level: " + str(bad_guy.att_lvl))
+                print("Bad guy new attack level: " + str(bad_guy.att_lvl + 1))
+                
             Actions.bg_research(bg)
             # bg.num_moves += 1
             #print("research")
         else:
+            #print the action took by the bad guy
+            if verbose:
+                print("Bad guy: " + str(bad_guy.bg_id))
+                print("Attacking target good guy: " + str(good_guy.gg_id))
+                print("Turn: " + str(bad_guy.num_moves))
+                print("Good guy def: " + str(good_guy.def_lvl))
+                print("Good guy bank: " + str(good_guy.bank))
+                print("Good guy strat: " + str(good_guy.strat))
+                print("Bad guy att: " + str(bad_guy.att_lvl))
+                print("Bad guy bank: " + str(bad_guy.bank))
+                print("Bad guy strat: " + str(bad_guy.strat))
+                print("Expected Payout (POV of BG): " + str(float(good_guy.bank) * (.2 + .1 * (float(bad_guy.att_lvl)-float(good_guy.def_lvl)))))
+                print("\n")
+
             Actions.bg_steal(bg, gg)
             #print("steal")
         return
 
-    def one_one(bg, gg):
+    def one_one(bg, gg, verbose):
+        bad_guy = bg
+        good_guy = gg
         if bg.num_moves % 2 == 0:
+            print("Bad Guy Researching")
+            if verbose:
+                print("Bad guy: " + str(bad_guy.bg_id))
+                print("Bad guy current attack level: " + str(bad_guy.att_lvl))
+                print("Bad guy new attack level: " + str(bad_guy.att_lvl + 1))
             Actions.bg_research(bg)
         else:
+            #print the action took by the bad guy
+            if verbose:
+                print("Bad guy: " + str(bad_guy.bg_id))
+                print("Attacking target good guy: " + str(good_guy.gg_id))
+                print("Turn: " + str(bad_guy.num_moves))
+                print("Good guy def: " + str(good_guy.def_lvl))
+                print("Good guy bank: " + str(good_guy.bank))
+                print("Good guy strat: " + str(good_guy.strat))
+                print("Bad guy att: " + str(bad_guy.att_lvl))
+                print("Bad guy bank: " + str(bad_guy.bank))
+                print("Bad guy strat: " + str(bad_guy.strat))
+                print("Expected Payout (POV of BG): " + str(float(good_guy.bank) * (.2 + .1 * (float(bad_guy.att_lvl)-float(good_guy.def_lvl)))))
+                print("\n")
             Actions.bg_steal(bg, gg)
-        return
+
+                
 
 
 # class Actions:

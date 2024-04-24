@@ -51,24 +51,13 @@ def use_strategy_bg(bad_guy, good_guys, verbose):
 
     #THIS IS THE TARGET GOOD GUY
     good_guy = max(lowest_defenses, key=lambda x: x.bank)
-    #print the action took by the bad guy
-    if verbose:
-        print("Bad guy: " + str(bad_guy.bg_id))
-        print("Attacking target good guy: " + str(good_guy.gg_id))
-        print("Turn: " + str(bad_guy.num_moves))
-        print("Good guy def: " + str(good_guy.def_lvl))
-        print("Good guy bank: " + str(good_guy.bank))
-        print("Good guy strat: " + str(good_guy.strat))
-        print("Bad guy att: " + str(bad_guy.att_lvl))
-        print("Bad guy bank: " + str(bad_guy.bank))
-        print("Bad guy strat: " + str(bad_guy.strat))
-        print("Payout of this attack (no def upgrade): " + str(float(good_guy.bank) * (.2 + .1 * (float(bad_guy.att_lvl)-float(good_guy.def_lvl)))))
-        print("\n")
-
+    
+    #Will consult other file to determine action
+    
 
     bad_guy.num_moves += 1
     #Will consult other file to determine action
-    consult_strategy.ConsultStrategy.bad_guy_use_strategy(bad_guy, good_guy)
+    consult_strategy.ConsultStrategy.bad_guy_use_strategy(bad_guy, good_guy, verbose)
     return 0
 
 
