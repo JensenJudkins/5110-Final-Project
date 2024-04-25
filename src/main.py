@@ -1,8 +1,15 @@
 #MAIN FILE TO RUN THE GAME
+from multiprocessing.pool import ThreadPool
 from helpers import consult_strategy
 from Good_Guy import Good_Guy
 from Bad_Guy import Bad_Guy
 import sys
+
+#Multithread imports
+import threading
+from multiprocessing import Process
+from multiprocessing import Pool
+
 
 def create_game(num_players):
     list_of_good_guys = []
@@ -111,13 +118,27 @@ def main(gg_count, bg_count,turn_count, verbose):
     print_game_state(good_guys, bad_guys)
 
     turns = turn_count
+    pool = ThreadPool()
     for turn in range(turns):
         print("---------------------------------Turn " + str(turn) + "---------------------------------")
+        # list_of_arguments = []
+        # for good_guy in good_guys:
+        #     list_of_arguments.append((good_guy, verbose, good_guys))
+        # #Lets multithread this loop
+        # with ThreadPool() as pool:
+        #     pool.map(use_strategy_gg, list_of_arguments)
+        #     pool.map(use_strategy_bg, [(bad_guy, good_guys, verbose) for bad_guy in bad_guys])
+
+        #Single threaded original
         for good_guy in good_guys:
             use_strategy_gg(good_guy, verbose, good_guys)
-
         for bad_guy in bad_guys:
             use_strategy_bg(bad_guy, good_guys, verbose)
+
+            
+
+    #Close pool
+    pool.close()
 
     print("\n")
     print("------------------------------------------------------------------------End of game--------------------------------------------------------\n")
