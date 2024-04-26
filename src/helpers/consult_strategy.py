@@ -137,7 +137,7 @@ class ConsultStrategy:
             ConsultStrategy.attack_poor(bg, gg, verbose, good_guys)
 
         return
-    
+
     def attack_poor(bg, gg, verbose, good_guys):
         # Attack the poorest good guy and research every 3rd move
         poorest_gg = min([gg.bank for gg in good_guys])
@@ -147,8 +147,8 @@ class ConsultStrategy:
         else:
             Actions.bg_steal(bg, target_gg, verbose)
         return
-    
-    
+
+
     def attack_strong(bg, gg, verbose, good_guys):
         #Attack the strongest good guy and research every 3rd move
         strongest_gg = max([gg.bank for gg in good_guys])
@@ -158,7 +158,7 @@ class ConsultStrategy:
         else:
             Actions.bg_steal(bg, target_gg, verbose)
         return
-    
+
     
     def attack_rich(bg, gg, verbose, good_guys):
         #Attack the richest good guy and research every 3rd move
@@ -177,7 +177,7 @@ class ConsultStrategy:
             Actions.bg_research(bg, verbose)
         else:
             Actions.bg_steal(bg, random.choice(good_guys), verbose)
-    
+
 
 
 
@@ -198,8 +198,67 @@ class ConsultStrategy:
             #print the action took by the bad guy
             Actions.bg_steal(bg, gg, verbose)
 
-                
 
+
+
+# class Actions:
+#     def gg_choose_defense(gg):
+#         gg.def_lvl += 1
+#         gg.update_last_action("defense")
+#         gg.increase_num_moves()
+#         print("defense")
+
+#     def gg_choose_money(gg):
+#         gg.bank += 1
+#         gg.update_last_action("money")
+#         gg.increase_num_moves()
+#         print("money")
+
+# class Good_Guy:
+#     last_action = None
+#     attack_count = 0
+#     strat = None
+#     num_moves = 0
+
+#     def __init__(self, gg_id, def_lvl=0, bank=0):
+#         self.gg_id = gg_id
+#         self.att_lvl = def_lvl
+#         self.def_lvl = def_lvl
+#         self.bank = bank
+
+#     def update_last_action(self, new_action):
+#         self.last_action = new_action
+
+#     def increase_attack_count(self):
+#         self.attack_count += 1
+
+#     def update_strat(self, new_strat):
+#         self.strat = new_strat
+
+#     def increase_num_moves(self):
+#         self.num_moves += 1
+
+
+
+# good_guy = Good_Guy("1", def_lvl=1, bank=100)
+
+# good_guy.update_strat("late_planner")
+# ConsultStrategy.use_strategy(good_guy)
+# ConsultStrategy.use_strategy(good_guy)
+# ConsultStrategy.use_strategy(good_guy)
+# ConsultStrategy.use_strategy(good_guy)
+# ConsultStrategy.use_strategy(good_guy)
+# good_guy.increase_attack_count()
+# good_guy.increase_attack_count()
+# good_guy.increase_attack_count()
+# good_guy.increase_attack_count()
+# ConsultStrategy.consult_strategy(good_guy)
+# ConsultStrategy.use_strategy(good_guy)
+# ConsultStrategy.use_strategy(good_guy)
+# ConsultStrategy.use_strategy(good_guy)
+# ConsultStrategy.use_strategy(good_guy)
+
+# print(good_guy.bank)
 
 # class Actions:
 #     def gg_choose_defense(gg):
